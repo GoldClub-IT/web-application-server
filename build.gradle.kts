@@ -47,3 +47,8 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
         attributes["Main-Class"] = "webserver.WebServer"
     }
 }
+
+// build 시 shadowJar도 같이 실행되도록 설정
+tasks.build {
+    dependsOn(tasks.shadowJar)
+}
