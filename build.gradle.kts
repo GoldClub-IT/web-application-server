@@ -9,7 +9,7 @@ plugins {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "src/main/java/webserver/WebServer"
+        attributes["Main-Class"] = "webserver.WebServer"
     }
 
     // 실행 가능한 jar로 만들기 위해 아래 옵션도 같이 추천
