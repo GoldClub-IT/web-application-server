@@ -5,15 +5,7 @@
 plugins {
     `java-library`
     `maven-publish`
-}
-
-tasks.jar {
-    manifest {
-        attributes["Main-Class"] = "webserver.WebServer"
-    }
-
-    // 실행 가능한 jar로 만들기 위해 아래 옵션도 같이 추천
-    from(sourceSets.main.get().output)
+    id("com.github.johnrengelman.shadow") version "8.1.1" // shadow plugin 추가
 }
 
 repositories {
@@ -40,10 +32,18 @@ publishing {
     }
 }
 
-tasks.withType<JavaCompile>() {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-tasks.withType<Javadoc>() {
+tasks.withType<Javadoc> {
     options.encoding = "UTF-8"
+}
+
+// fat JAR (all dependencies 포함) 생성 및 Main-Class 명시
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    archiveClassifier.set("web-application-server-1.0.jar") // 기본 jar 이름 사용 (ex: web-application-server-1.0.jar)
+    manifest {
+        attributes["Main-Class"] = "webserver.WebServer"
+    }
 }
