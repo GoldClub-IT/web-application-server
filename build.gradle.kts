@@ -42,7 +42,7 @@ tasks.withType<Javadoc> {
 
 // fat JAR (all dependencies 포함) 생성 및 Main-Class 명시
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
-    archiveClassifier.set("web-application-server-1.0.jar") // 기본 jar 이름 사용 (ex: web-application-server-1.0.jar)
+    archiveClassifier.set("") // 기본 jar 이름 사용 (ex: web-application-server-1.0.jar)
     manifest {
         attributes["Main-Class"] = "webserver.WebServer"
     }
