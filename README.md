@@ -31,6 +31,43 @@
 * InputStreamReader은 문자(character) 단위로 데이터를 처리할 수 있도록 돕는다.
 * InputStream의 데이터를 문자로 변환하는 중개 역할을 한다.
 * BufferedReader은 스트림에 버퍼를 두어 문자를 버퍼에 일정 정도 저장해둔 뒤 한 번에 보낸다.
+* Junit 4 -> Junit 5
+    * Junit 4: 모든 것이 하나의 Jar 파일에 번들로 포함되어 있다.
+    * Junit 5: Java 8 스타일의 코딩을 적용하고 Junit4보다 강력하고 유연하게 만드는 것이 목표, JUnit Platform, JUnit Jupiter 그리고 JUnit Vintage의 3가지
+      하위
+      프로젝트로 구성됩니다.
+    * JUnit 5에서는 테스트 클래스와 테스트 메서드를 public으로 하지 않아도 됩니다. 이제 package protected로 만들 수 있습니다. JUnit은 내부적으로 리플렉션을 사용하여 테스트
+      클래스와 테스트 메서드를 찾습니다. 리플렉션은 가시성이 제한된 경우에도 이를 찾을 수 있으므로 public으로 설정할 필요가 없습니다.
+    * JUnit의 테스트 클래스는 파라미터도 있는 non-public 생성자를 가질 수 있습니다. 즉 JUnit 5에서는 기본 생성자가 필수가 아닙니다.
+* 왜 JUnit 5에서 throws Exception을 생략해도 되는가?
+    * JUnit 5의 @Test 메서드는 다음과 같이 선언되어 있습니다:
+
+```java
+
+@Target({METHOD})
+@Retention(RUNTIME)
+@Testable
+public @interface Test {
+}
+```
+
+즉, JUnit 5는 테스트 메서드에서 예외가 던져지면 런타임에 전파되고 실패 처리됩니다.
+throws Exception을 반드시 명시할 필요는 없습니다. 컴파일러가 요구하는 경우에만 붙이면 됩니다. JUnit 5테스트 메서드에서 예외가 발생하면, 그것을 자동으로 테스트 실패로 간주합니다. 그리고
+자바에서는 unchecked exception은 throws 명시가 필요 없기 때문에, 대부분의 경우 생략이 가능합니다. JUnit 5는 JUnit 4처럼 @Test(expected = ...) 방식이 아닌,
+다음처럼 예외를 검증하는 API를 제공합니다:
+
+```java
+
+@Test
+void testThrows() {
+    assertThrows(IOException.class, () -> {
+        throw new IOException("boom");
+    });
+}
+```
+
+이런 구조 때문에 throws가 굳이 필요 없는 경우가 많아졌고, 개발자가 직접 예외를 테스트할 수 있게 된 것입니다.
+던지는 예외가 checked exception(예: IOException, SQLException)이라면 throws를 명시해야 합니다.
 
 ### 요구사항 2 - get 방식으로 회원가입
 
