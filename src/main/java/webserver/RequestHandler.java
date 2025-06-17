@@ -12,11 +12,11 @@ public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 
     private final Socket connection;
+    private final HttpRequestSplitUrl httpRequestSplitUrl;
 
-    private final HttpRequestSplitUrl httpRequestSplitUrl = new HttpRequestSplitUrl();
-
-    public RequestHandler(Socket connectionSocket) {
+    public RequestHandler(Socket connectionSocket, HttpRequestSplitUrl httpRequestSplitUrl) {
         this.connection = connectionSocket;
+        this.httpRequestSplitUrl = httpRequestSplitUrl;
     }
 
     public void run() {
