@@ -19,6 +19,8 @@ dependencies {
     api(libs.com.google.guava.guava)
     api(libs.ch.qos.logback.logback.classic)
     testImplementation(libs.junit.junit)
+    // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    testImplementation("org.assertj:assertj-core:3.27.3")
 }
 
 group = "org.nhnnext"
