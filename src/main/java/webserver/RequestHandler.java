@@ -2,7 +2,7 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.HttpRequestSplitUrl;
+import util.HttpRequestUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -12,11 +12,9 @@ public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
 
     private final Socket connection;
-    private final HttpRequestSplitUrl httpRequestSplitUrl;
 
-    public RequestHandler(Socket connectionSocket, HttpRequestSplitUrl httpRequestSplitUrl) {
+    public RequestHandler(Socket connectionSocket) {
         this.connection = connectionSocket;
-        this.httpRequestSplitUrl = httpRequestSplitUrl;
     }
 
     public void run() {
@@ -27,7 +25,7 @@ public class RequestHandler extends Thread {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
 
             String line = bufferedReader.readLine();
-            String url = httpRequestSplitUrl.extractUrl(line);
+            String url = HttpRequestUtils.extractUrl(line);
             while (!line.isEmpty()) {
                 line = bufferedReader.readLine();
                 if (line == null) {
