@@ -19,6 +19,7 @@ dependencies {
     api(libs.com.google.guava.guava)
     api(libs.ch.qos.logback.logback.classic)
     testImplementation(libs.junit.junit)
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     testImplementation("org.assertj:assertj-core:3.27.3")
 }
@@ -53,4 +54,8 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
 // build 시 shadowJar도 같이 실행되도록 설정
 tasks.build {
     dependsOn(tasks.shadowJar)
+}
+
+tasks.test {
+    useJUnitPlatform();
 }
